@@ -4,10 +4,8 @@ module.exports = function(server) {
     server.post('/auth/local', function(req, res, next) {
         var user = req.body.local;
         User.findOne({
-            local: {
-                email: user.email,
-                password: user.password
-            }
+            'local.email': user.email,
+            'local.password': user.password
         }, function(err, user) {
             if (err) {
                 res.json({

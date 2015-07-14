@@ -6,7 +6,8 @@ var userSchema = new Schema({
 	accountType: String,
 	local: {
 		email: String,
-		password: String
+		password: String,
+		picture: String
 	}, 
 	facebook: {
 		accessToken: String,

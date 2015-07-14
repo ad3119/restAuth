@@ -1,4 +1,4 @@
-module.exports = function(server) {
+module.exports = function(server, fs, path) {
     var User = require('../models/user.js');
     server.get('/user/:email', function(req, res, next) {
         User.count({
@@ -16,6 +16,19 @@ module.exports = function(server) {
                     object: count
                 });
             }
+        });
+    });
+
+    server.get('/user/local/:imageName', function(req, res, next) {
+        if(!req.params.imageName) {
+            return next();
+        }
+        fs.readdir('./uploads', function(err, files) {
+            files.forEach(function(file) {
+                if(req.params.imageName === file.replace(/\.[^/.]+$/, "")) {
+                    res.sendFile(path.join(__dirname, '../uploads', file));
+                } 
+            });
         });
     });
 
