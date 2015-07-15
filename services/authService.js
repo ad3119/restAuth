@@ -1,21 +1,33 @@
-module.exports = function(server) {
+module.exports = function(server, bcrypt) {
     var User = require('../models/user.js');
 
     server.post('/auth/local', function(req, res, next) {
-        var user = req.body.local;
         User.findOne({
-            'local.email': user.email,
-            'local.password': user.password
+            'local.email': req.body.local.email
         }, function(err, user) {
             if (err) {
                 res.json({
                     success: false,
                 });
             } else {
-                res.json({
-                    success: true,
-                    object: user
-                });
+                if(user === null) {
+                    res.json({
+                        success: false,
+                        message: 'User not found'
+                    })
+                } else {
+                    if(bcrypt.compareSync(req.body.local.password, user.local.password)) {
+                        res.json({
+                            success: true,
+                            object: user
+                        });
+                    } else {
+                        res.json({
+                            success: false,
+                            message: 'Wrong password'
+                        });
+                    }
+                }
             }
         });
     });

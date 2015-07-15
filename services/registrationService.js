@@ -1,12 +1,13 @@
-module.exports = function(server) {
+module.exports = function(server, bcrypt) {
     var User = require('../models/user.js');
 
     server.post('/registerLocal', function(req, res, next) {
+        var password = bcrypt.hashSync(req.body.password)
         var user = new User({
             registeredEmail: req.body.email,
             accountType: 'local',
             'local.email': req.body.email,
-            'local.password': req.body.password,
+            'local.password': password,
             'local.picture': 'http://localhost:8090/user/local/'+req.body.email
         });
         user.save(function(err) {

@@ -8,6 +8,7 @@ var express = require('express'),
     fs = require('fs'),
     path = require('path'),
     regex = require('regex'),
+    bcrypt = require('bcrypt-nodejs'),
     server = express();
 
 require('./multerConfig.js')(server, multer);
@@ -21,9 +22,9 @@ server.use(bodyParser.urlencoded({
 server.use(bodyParser.json());
 server.use(cors());
 
-require('./services/registrationService.js')(server);
+require('./services/registrationService.js')(server, bcrypt);
+require('./services/authService.js')(server, bcrypt);
 require('./services/userService.js')(server, fs, path);
-require('./services/authService.js')(server);
 
 mongoose.connect('mongodb://localhost/restAuth', function(err) {
     if (err) {

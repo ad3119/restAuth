@@ -10,7 +10,6 @@ module.exports = function(server, fs, path) {
                     success: false
                 });
             } else {
-                console.log(count);
                 res.json({
                     success: true,
                     object: count
