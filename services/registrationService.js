@@ -1,4 +1,4 @@
-module.exports = function(server, bcrypt) {
+module.exports = function(server, bcrypt, jwt) {
     var User = require('../models/user.js');
 
     server.post('/registerLocal', function(req, res, next) {
@@ -17,10 +17,15 @@ module.exports = function(server, bcrypt) {
                     success: false
                 });
             } else {
+                // Success, generate the jwt
+                var token = jwt.sign(user._id, server.get('secret'), {
+                    expiresInMintues: 1440
+                });
                 res.json({
                     success: true,
                     message: 'Registration successful',
-                    object: user
+                    object: user,
+                    token: token
                 });
             }
         });
@@ -35,10 +40,15 @@ module.exports = function(server, bcrypt) {
                     success: false
                 });
             } else {
+                // Success, generate the jwt
+                var token = jwt.sign(user._id, server.get('secret'), {
+                    expiresInMintues: 1440
+                });
                 res.json({
                     success: true,
                     message: 'Registration successful',
-                    object: user
+                    object: user,
+                    token: token
                 });
             }
         });
