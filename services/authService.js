@@ -1,4 +1,4 @@
-module.exports = function(server, bcrypt, jwt) {
+module.exports = function(server, bcrypt, jwt, fs, path) {
     var User = require('../models/user.js');
 
     /* Local login */
@@ -35,6 +35,20 @@ module.exports = function(server, bcrypt, jwt) {
                     }
                 }
             }
+        });
+    });
+
+    /* Get user profile picture */
+    server.get('/auth/local/:imageName', function(req, res, next) {
+        if(!req.params.imageName) {
+            return next();
+        }
+        fs.readdir('./uploads', function(err, files) {
+            files.forEach(function(file) {
+                if(req.params.imageName === file.replace(/\.[^/.]+$/, "")) {
+                    res.sendFile(path.join(__dirname, '../uploads', file));
+                } 
+            });
         });
     });
 

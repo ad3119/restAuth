@@ -24,18 +24,4 @@ module.exports = function(server, fs, path) {
             }
         });
     });
-
-    /* Get user profile picture */
-    server.get('/user/local/:imageName', function(req, res, next) {
-        if(!req.params.imageName) {
-            return next();
-        }
-        fs.readdir('./uploads', function(err, files) {
-            files.forEach(function(file) {
-                if(req.params.imageName === file.replace(/\.[^/.]+$/, "")) {
-                    res.sendFile(path.join(__dirname, '../uploads', file));
-                } 
-            });
-        });
-    });
 };

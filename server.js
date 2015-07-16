@@ -29,7 +29,7 @@ server.use(function(req, res, next) {
 
 /* Unprotected routes */
 require('./services/registrationService.js')(server, bcrypt, jwt);
-require('./services/authService.js')(server, bcrypt, jwt);
+require('./services/authService.js')(server, bcrypt, jwt, fs, path);
 
 /* Middleware to protect API routes */
 require('./services/apiMiddleware.js')(server, jwt);
