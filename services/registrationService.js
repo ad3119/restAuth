@@ -8,6 +8,7 @@ module.exports = function(server, bcrypt, jwt) {
             accountType: 'local',
             'local.email': req.body.email,
             'local.password': password,
+            'local.name': req.body.name,
             'local.picture': 'http://localhost:8090/auth/local/'+req.body.email
         });
         user.save(function(err) {

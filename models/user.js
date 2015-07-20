@@ -4,9 +4,14 @@ var mongoose = require('mongoose'),
 var userSchema = new Schema({
 	registeredEmail: String,
 	accountType: String,
+	registeredOn: { 
+		type: Date, 
+		default: Date.now 
+	},
 	local: {
 		email: String,
 		password: String,
+		name: String,
 		picture: String
 	}, 
 	facebook: {

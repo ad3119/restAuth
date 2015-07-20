@@ -3,6 +3,9 @@ module.exports = function(server, bcrypt, jwt, fs, path) {
 
     /* Local login */
     server.post('/auth/local', function(req, res, next) {
+        if(req.params.imageName) {
+            return next();
+        }
         User.findOne({
             'local.email': req.body.local.email
         }, function(err, user) {
@@ -40,9 +43,6 @@ module.exports = function(server, bcrypt, jwt, fs, path) {
 
     /* Get user profile picture */
     server.get('/auth/local/:imageName', function(req, res, next) {
-        if(!req.params.imageName) {
-            return next();
-        }
         fs.readdir('./uploads', function(err, files) {
             files.forEach(function(file) {
                 if(req.params.imageName === file.replace(/\.[^/.]+$/, "")) {

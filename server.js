@@ -23,10 +23,6 @@ server.use(bodyParser.urlencoded({
 server.use(bodyParser.json());
 server.use(cors());
 
-server.use(function(req, res, next) {
-    next();
-});
-
 /* Unprotected routes */
 require('./services/registrationService.js')(server, bcrypt, jwt);
 require('./services/authService.js')(server, bcrypt, jwt, fs, path);
@@ -36,6 +32,7 @@ require('./services/apiMiddleware.js')(server, jwt);
 
 /* Protected routes */
 require('./services/userService.js')(server, fs, path);
+require('./services/activityService.js')(server);
 
 mongoose.connect('mongodb://localhost/restAuth', function(err) {
     if (err) {
