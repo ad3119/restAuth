@@ -106,7 +106,7 @@ module.exports = function(server, bcrypt, jwt, fs, path) {
                         expiresInMintues: 1440
                     });
                     res.json({
-                        succes: true,
+                        success: true,
                         message: 'Successfully updated accessToken, login success',
                         token: token
                     });
@@ -142,12 +142,7 @@ module.exports = function(server, bcrypt, jwt, fs, path) {
         var type = req.params.type;
         var email = req.params.email;
         var query = null;
-        if (type === 'local') {
-            query = {
-                'registeredEmail': email,
-                'local.email': email
-            };
-        } else if (type === 'facebook') {
+        if (type === 'facebook') {
             query = {
                 'registeredEmail': email,
                 'facebook.email': email
