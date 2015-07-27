@@ -4,6 +4,7 @@ var mongoose = require('mongoose'),
 var userSchema = new Schema({
 	registeredEmail: String,
 	accountType: String,
+	referredBy: String,
 	registeredOn: { 
 		type: Date, 
 		default: Date.now 

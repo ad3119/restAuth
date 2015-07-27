@@ -16,6 +16,11 @@ module.exports = function(server, fs, path) {
                     success: false,
                     message: 'Error while performing query'
                 });
+            } else if(user === null) {
+                res.json({
+                    success: false,
+                    message: 'User not found'
+                });
             } else {
                 res.json({
                     success: true,

@@ -33,6 +33,8 @@ require('./services/apiMiddleware.js')(server, jwt);
 /* Protected routes */
 require('./services/userService.js')(server, fs, path);
 require('./services/activityService.js')(server);
+require('./services/accountService.js')(server, fs);
+require('./services/referralService.js')(server);
 
 mongoose.connect('mongodb://localhost/restAuth', function(err) {
     if (err) {
